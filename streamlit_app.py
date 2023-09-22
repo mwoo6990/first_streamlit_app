@@ -33,6 +33,11 @@ def get_fruityvice_data(this_fruit_choide):
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("SELECT * FROM fruit_load_list")
+        return my_cur.fetchall()
+
 streamlit.header("Fruityvice Fruit Advice!")
 
 try:
@@ -48,12 +53,8 @@ except URLError as e:
 
 
 
-
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT* FROM fruit_load_list")
-my_data_row = my_cur.fetchall()
 streamlit.header("The fruit load list contains:")
-streamlit.dataframe(my_data_row)
+streamlit.dataframe(getfruit_load_list())
 
 fruit_to_add = streamlit.text_input("What fruit would you like to add?", "jackfruit")
 my_cur.execute(f"insert into fruit_load_list values('{fruit_to_add}')")
