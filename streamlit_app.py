@@ -4,7 +4,7 @@ import pandas
 import snowflake.connector
 from urllib.error import URLError
 
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+
 
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
@@ -54,7 +54,10 @@ except URLError as e:
 
 
 streamlit.header("The fruit load list contains:")
-streamlit.dataframe(getfruit_load_list())
+if streamlist.button('Get Fruit Load List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_data_rows = get_fruit_load_list()
+    streamlit.dataframe(my_data_rows)
 
 fruit_to_add = streamlit.text_input("What fruit would you like to add?", "jackfruit")
 my_cur.execute(f"insert into fruit_load_list values('{fruit_to_add}')")
