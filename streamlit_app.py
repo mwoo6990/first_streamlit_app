@@ -35,7 +35,7 @@ streamlit.header("Fruityvice Fruit Advice!")
 try:
   fruit_choice = streamlit.text_input("What fruit would you like information about?")
   if not fruit_choice:
-    streamlit.error("Please selecta fruit to get information.")
+    streamlit.error("Please select a fruit to get information.")
   else:
     fruityvice_response =- requests.get(f"https://fruityvice.com/api/fruit/{fruit_choice}")
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
@@ -53,5 +53,5 @@ streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
 
 fruit_to_add = streamlit.text_input("What fruit would you like to add?", "jackfruit")
-my_cur.execute(f"insert into fruit_load_list values('{fruit_to_add'})")
+my_cur.execute(f"insert into fruit_load_list values('{fruit_to_add}')")
 streamlit.write(f"Thanks for adding ", fruit_to_add)
